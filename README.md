@@ -23,6 +23,7 @@ The project includes:
 - automatic positioning of the winning value beneath the pointer
 - automatic display of the selected value after the spin
 - support for longer labels such as organization or project names
+- automatic wrapping and font scaling for long wheel labels
 - responsive styling for desktop and smaller screens
 
 The tool runs entirely in the browser and does not require a web server, external JavaScript library, API key, or internet connection.

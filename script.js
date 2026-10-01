@@ -77,17 +77,75 @@ function drawWheel() {
     ctx.save();
     ctx.translate(centerX, centerY);
     ctx.rotate(startAngle + sliceAngle / 2);
-    ctx.textAlign = "right";
+    ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.fillStyle = "#ffffff";
 
     const label = values[i];
     let fontSize = 26;
-    if (label.length > 16) fontSize = 20;
-    if (label.length > 24) fontSize = 16;
+    if (label.length > 12) fontSize = 22;
+    if (label.length > 18) fontSize = 19;
+    if (label.length > 24) fontSize = 17;
+    if (slotCount >= 8) fontSize = Math.min(fontSize, 18);
+    if (slotCount >= 12) fontSize = Math.min(fontSize, 15);
 
     ctx.font = `bold ${fontSize}px Arial`;
-    ctx.fillText(label, radius - 28, 0);
+
+    // Keep labels safely inside the slice. Long labels are wrapped
+    // automatically and, if needed, the font is reduced until they fit.
+    const textRadius = radius * 0.60;
+    const maxTextWidth = radius * 0.58;
+    const maxLines = 3;
+
+    function wrapLabel(text) {
+      const words = text.split(/\s+/).filter(Boolean);
+      if (words.length === 0) return [""];
+      if (words.length === 1) return [text];
+
+      const lines = [];
+      let current = words[0];
+
+      for (let w = 1; w < words.length; w++) {
+        const test = `${current} ${words[w]}`;
+        if (ctx.measureText(test).width <= maxTextWidth) {
+          current = test;
+        } else {
+          lines.push(current);
+          current = words[w];
+        }
+      }
+      lines.push(current);
+      return lines;
+    }
+
+    let lines = wrapLabel(label);
+
+    while (
+      (lines.length > maxLines || lines.some(line => ctx.measureText(line).width > maxTextWidth)) &&
+      fontSize > 11
+    ) {
+      fontSize -= 1;
+      ctx.font = `bold ${fontSize}px Arial`;
+      lines = wrapLabel(label);
+    }
+
+    // If a single very long word still does not fit, scale just that line.
+    const lineHeight = fontSize * 1.08;
+    const startY = -((lines.length - 1) * lineHeight) / 2;
+
+    lines.forEach((line, lineIndex) => {
+      const measured = ctx.measureText(line).width;
+      if (measured > maxTextWidth) {
+        ctx.save();
+        ctx.translate(textRadius, startY + lineIndex * lineHeight);
+        ctx.scale(maxTextWidth / measured, 1);
+        ctx.fillText(line, 0, 0);
+        ctx.restore();
+      } else {
+        ctx.fillText(line, textRadius, startY + lineIndex * lineHeight);
+      }
+    });
+
     ctx.restore();
   }
 
