@@ -1,0 +1,127 @@
+:root {
+  color-scheme: dark;
+  font-family: Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #111827;
+  color: #ffffff;
+}
+
+.container {
+  width: min(92vw, 760px);
+  text-align: center;
+  padding: 28px 16px 40px;
+}
+
+h1 {
+  margin: 0 0 24px;
+  font-size: clamp(30px, 5vw, 42px);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+  margin: 0 auto 28px;
+  text-align: left;
+  max-width: 560px;
+}
+
+.controls label {
+  font-weight: 700;
+  align-self: center;
+}
+
+.controls input,
+.controls textarea {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #475569;
+  border-radius: 8px;
+  background: #1f2937;
+  color: white;
+  font: inherit;
+}
+
+.controls textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.controls button {
+  grid-column: 1 / -1;
+}
+
+.wheel-container {
+  position: relative;
+  width: min(82vw, 500px);
+  aspect-ratio: 1;
+  margin: 0 auto 28px;
+}
+
+.pointer {
+  position: absolute;
+  top: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 24px solid transparent;
+  border-right: 24px solid transparent;
+  border-top: 50px solid white;
+  z-index: 10;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+button {
+  min-height: 48px;
+  padding: 14px 24px;
+  font-size: 18px;
+  font-weight: 700;
+  border: 0;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #2563eb;
+  color: white;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+
+#result {
+  margin-top: 22px;
+  min-height: 50px;
+  font-size: clamp(28px, 6vw, 42px);
+  font-weight: 700;
+}
+
+@media (max-width: 640px) {
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .controls button {
+    grid-column: auto;
+  }
+}

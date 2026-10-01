@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A standalone JavaScript spinning wheel for random selection.">
+  <title>Random JavaScript Spinning Wheel</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="container">
+    <h1>Random Selection</h1>
+
+    <section class="controls" aria-label="Wheel settings">
+      <label for="slotCount">Number of slots</label>
+      <input id="slotCount" type="number" min="2" max="20" value="4">
+
+      <label for="valuesInput">Values, one per line</label>
+      <textarea id="valuesInput" rows="6">Brad
+Youles
+University of Michigan
+IRIS</textarea>
+
+      <button id="updateButton" type="button">UPDATE WHEEL</button>
+    </section>
+
+    <div class="wheel-container">
+      <div class="pointer" aria-hidden="true"></div>
+      <canvas id="wheel" width="500" height="500" aria-label="Random spinning wheel"></canvas>
+    </div>
+
+    <button id="spinButton" type="button">SPIN THE WHEEL</button>
+
+    <div id="result" aria-live="polite"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
